@@ -9,20 +9,20 @@ from ex_classifier.c_model import SentClassifier
 class TestSent2Vec(unittest.TestCase):
 
     def test_zero(self):
-        self.assertEqual(sent2vec('').shape, sent2vec('台灣').shape)
+        self.assertEqual(sent2vec(''), None)
 
     def test_sim(self):
         self.assertEqual(sent2vec('台灣').shape, sent2vec('台灣').shape)
 
     def test_shape(self):
-        self.assertEqual(sent2vec('').shape[0], 1)
+        self.assertEqual(sent2vec('台灣').shape[0], 1)
 
 
 class TestDataloader(unittest.TestCase):
 
     def test_workable(self):
         batch = 2
-        dataloader = SentDataloader('path')
+        dataloader = SentDataloader('udicstm_for_dataloader.csv')
         dl = data.DataLoader(dataset=dataloader,
                              batch_size=batch,
                              shuffle=True)
