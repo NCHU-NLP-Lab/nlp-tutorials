@@ -1,9 +1,9 @@
 import unittest
 from torch.utils import data
 
-from w2v_classifier.ex_classifier.a_sent2vec import *
-from w2v_classifier.ex_classifier.b_dataloader import SentDataloader
-from w2v_classifier.ex_classifier.c_model import SentClassifier
+from ex_classifier.a_sent2vec import *
+from ex_classifier.b_dataloader import SentDataloader
+from ex_classifier.c_model import SentClassifier
 
 
 class TestSent2Vec(unittest.TestCase):

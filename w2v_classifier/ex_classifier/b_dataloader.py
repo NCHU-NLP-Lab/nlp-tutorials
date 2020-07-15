@@ -1,6 +1,6 @@
 from torch.utils import data
 
-from w2v_classifier.ex_classifier.a_sent2vec import sent2vec
+from .a_sent2vec import sent2vec
 
 
 class SentDataloader(data.Dataset):
