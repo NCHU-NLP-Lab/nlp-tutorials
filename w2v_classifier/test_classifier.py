@@ -1,4 +1,5 @@
 import unittest
+from torch import optim
 from torch.utils import data
 
 from ex_classifier.a_sent2vec import *
@@ -34,12 +35,13 @@ class TestModel(unittest.TestCase):
 
     def test_workable(self):
         batch = 2
-        dataloader = SentDataloader('path')
+        dataloader = SentDataloader('udicstm_for_dataloader.csv')
         dl = data.DataLoader(dataset=dataloader,
                              batch_size=batch,
                              shuffle=True)
-        classifier = SentClassifier(3, 2)
-        preducted, loss = classifier.forward(dl)
+        classifier = SentClassifier(250, 2)
+        for i in dl:
+            preducted, loss = classifier.forward(i)
         print(preducted)
         print(loss)
 
@@ -47,17 +49,23 @@ class TestModel(unittest.TestCase):
 class Overall(unittest.TestCase):
 
     def test_workable(self):
-        batch = 2
+        batch = 20
         epoch = 10
-        dataloader = SentDataloader('path')
-        dl = data.DataLoader(dataset=dataloader,
-                             batch_size=batch,
-                             shuffle=True)
-        classifier = SentClassifier(3, 2)
-        for d in dl:
-            preducted, loss = classifier.forward(d)
-            loss.mean().backward()
-            print(loss)
+        dataloader = SentDataloader('udicstm_for_dataloader.csv')
+        classifier = SentClassifier(250, 2)
+        optimizer = optim.SGD(classifier.parameters(), lr=0.01, momentum=0.9)
+        for ep in range(epoch):
+            dl = data.DataLoader(dataset=dataloader,
+                                 batch_size=batch,
+                                 shuffle=True)
+            total_loss = 0
+            for d in dl:
+                optimizer.zero_grad()
+                preducted, loss = classifier.forward(d)
+                loss.backward()
+                optimizer.step()
+                total_loss += loss
+            print(total_loss/len(dl))
 
 
 if __name__ == '__main__':
