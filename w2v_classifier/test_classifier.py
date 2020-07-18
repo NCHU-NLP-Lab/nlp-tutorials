@@ -6,6 +6,8 @@ from ex_classifier.a_sent2vec import *
 from ex_classifier.b_dataloader import SentDataloader
 from ex_classifier.c_model import SentClassifier
 
+from ex_classifier.d_predict import sent_predictor
+
 
 class TestSent2Vec(unittest.TestCase):
 
@@ -65,7 +67,12 @@ class Overall(unittest.TestCase):
                 loss.backward()
                 optimizer.step()
                 total_loss += loss
-            print(total_loss/len(dl))
+            print(total_loss / len(dl))
+
+
+class Predict(unittest.TestCase):
+    def test_function(self):
+        self.assertTrue(isinstance(sent_predictor('pk'), str))
 
 
 if __name__ == '__main__':
