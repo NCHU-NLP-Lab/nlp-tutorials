@@ -17,9 +17,9 @@ Raw Dump Size: 1GB
 Simple Correlation Model Size: 2 GB
 # of pairs in Correlation Model: 2,428,774,782 
 ```
-Chinese Wiki Corpus Raw Text Preprocess (資料集的下載與前處理)
+- Chinese Wiki Corpus Raw Text Preprocess (資料集的下載與前處理)
 https://github.com/NCHU-NLU-Lab/Wiki_Extractor
-使用 500,000 篇文章進行練習
+- 使用 500,000 篇文章進行 KCM 練習
 
 ## Objective
 
