@@ -13,4 +13,4 @@ def sent2vec(sent=''):
     sentence_vector : torch.FloatTensor
         sentence vector from word vector, formatting in torch.tensor
     """
-    return torch.tensor([[1.0, 2.0, 3.0]])
+    return torch.tensor([1.0, 2.0, 3.0])

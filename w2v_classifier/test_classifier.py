@@ -12,13 +12,13 @@ from ex_classifier.d_predict import sent_predictor
 class TestSent2Vec(unittest.TestCase):
 
     def test_zero(self):
-        self.assertEqual(sent2vec(''), None)
+        self.assertEqual(sent2vec(''), [])
 
     def test_sim(self):
-        self.assertEqual(sent2vec('台灣').shape, sent2vec('台灣').shape)
+        self.assertEqual(sent2vec('台灣').shape, sent2vec('中國').shape)
 
     def test_shape(self):
-        self.assertEqual(sent2vec('台灣').shape[0], 1)
+        self.assertEqual(sent2vec('台灣').shape[0], 250)
 
 
 class TestDataloader(unittest.TestCase):
@@ -29,8 +29,9 @@ class TestDataloader(unittest.TestCase):
         dl = data.DataLoader(dataset=dataloader,
                              batch_size=batch,
                              shuffle=True)
-        for i in dl:
-            print(i)
+        for d in dl:
+            input_vec, target = d
+            print(input_vec, target)
 
 
 class TestModel(unittest.TestCase):
@@ -42,8 +43,9 @@ class TestModel(unittest.TestCase):
                              batch_size=batch,
                              shuffle=True)
         classifier = SentClassifier(250, 2)
-        for i in dl:
-            preducted, loss = classifier.forward(i)
+        for d in dl:
+            input_vec, target = d
+            preducted, loss = classifier.forward(input_vec, target)
         print(preducted)
         print(loss)
 
@@ -62,8 +64,9 @@ class Overall(unittest.TestCase):
                                  shuffle=True)
             total_loss = 0
             for d in dl:
+                input_vec, target = d
                 optimizer.zero_grad()
-                preducted, loss = classifier.forward(d)
+                preducted, loss = classifier.forward(input_vec, target)
                 loss.backward()
                 optimizer.step()
                 total_loss += loss
@@ -72,8 +75,11 @@ class Overall(unittest.TestCase):
 
 class Predict(unittest.TestCase):
     def test_function(self):
-        self.assertTrue(isinstance(sent_predictor('pk'), str))
+        self.assertTrue(isinstance(sent_predictor('這餐廳的送餐速度很快，服務也很好'), str))
 
+    def test_example(self):
+        self.assertTrue(sent_predictor('這餐廳的送餐速度很快，服務也很好') == 'positive')
+        self.assertTrue(sent_predictor('這飯店服務很糟糕') == 'negative')
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)
