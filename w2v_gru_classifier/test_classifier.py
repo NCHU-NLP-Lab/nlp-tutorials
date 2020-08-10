@@ -43,7 +43,8 @@ class TestModel(unittest.TestCase):
                              shuffle=True)
         classifier = SentClassifier(250, 2)
         for i in dl:
-            preducted, loss = classifier.forward(i)
+            input_vec, target = d
+            preducted, loss = classifier.forward(input_vec, target)
         print(preducted)
         print(loss)
 
@@ -62,8 +63,9 @@ class Overall(unittest.TestCase):
                                  shuffle=True)
             total_loss = 0
             for d in dl:
+                input_vec, target = d
                 optimizer.zero_grad()
-                preducted, loss = classifier.forward(d)
+                preducted, loss = classifier.forward(input_vec, target)
                 loss.backward()
                 optimizer.step()
                 total_loss += loss
