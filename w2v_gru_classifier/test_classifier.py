@@ -12,37 +12,38 @@ from ex_classifier.d_predict import sent_predictor
 class TestSent2Vec(unittest.TestCase):
 
     def test_zero(self):
-        self.assertEqual(sent2vec(''), None)
+        self.assertEqual(sent2vec(''), [])
 
     def test_sim(self):
-        self.assertEqual(sent2vec('台灣').shape, sent2vec('台灣').shape)
+        self.assertEqual(sent2vec('台灣').shape, sent2vec('中國').shape)
 
     def test_shape(self):
-        self.assertEqual(sent2vec('台灣').shape[0], 1)
+        self.assertEqual(sent2vec('台灣').shape[1], 250)
 
 
 class TestDataloader(unittest.TestCase):
 
     def test_workable(self):
         batch = 2
-        dataloader = SentDataloader('udicstm_for_dataloader.csv')
+        dataloader = SentDataloader('Taipei_FAQ_for_dataloader.csv')
         dl = data.DataLoader(dataset=dataloader,
                              batch_size=batch,
                              shuffle=True)
-        for i in dl:
-            print(i)
+        for d in dl:
+            input_vec, target = d
+            print(input_vec, target)
 
 
 class TestModel(unittest.TestCase):
 
     def test_workable(self):
         batch = 2
-        dataloader = SentDataloader('udicstm_for_dataloader.csv')
+        dataloader = SentDataloader('Taipei_FAQ_for_dataloader.csv')
         dl = data.DataLoader(dataset=dataloader,
                              batch_size=batch,
                              shuffle=True)
-        classifier = SentClassifier(250, 2)
-        for i in dl:
+        classifier = SentClassifier(250, 78)
+        for d in dl:
             input_vec, target = d
             preducted, loss = classifier.forward(input_vec, target)
         print(preducted)
@@ -54,9 +55,10 @@ class Overall(unittest.TestCase):
     def test_workable(self):
         batch = 20
         epoch = 10
-        dataloader = SentDataloader('udicstm_for_dataloader.csv')
-        classifier = SentClassifier(250, 2)
-        optimizer = optim.SGD(classifier.parameters(), lr=0.01, momentum=0.9)
+        dataloader = SentDataloader('Taipei_FAQ_for_dataloader.csv')
+        classifier = SentClassifier(250, 78)
+        # optimizer = optim.SGD(classifier.parameters(), lr=0.01, momentum=0.9)
+        optimizer = optim.Adam(classifier.parameters(), lr=0.001)
         for ep in range(epoch):
             dl = data.DataLoader(dataset=dataloader,
                                  batch_size=batch,
@@ -74,7 +76,11 @@ class Overall(unittest.TestCase):
 
 class Predict(unittest.TestCase):
     def test_function(self):
-        self.assertTrue(isinstance(sent_predictor('pk'), str))
+        self.assertTrue(isinstance(sent_predictor('如何查詢藝文推廣處城市舞台檔期?'), str))
+
+    def test_example(self):
+        self.assertTrue(sent_predictor('如何查詢藝文推廣處城市舞台檔期?') == '臺北市藝文推廣處')
+        self.assertTrue(sent_predictor('如果感染了登革熱該怎麼辦?') == '臺北市政府衛生局疾病管制科')
 
 
 if __name__ == '__main__':
