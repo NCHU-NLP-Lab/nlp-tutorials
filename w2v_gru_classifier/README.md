@@ -1,5 +1,5 @@
 # W2V GRU Classifier Exercise
-Use word2vec and GRU to train a sentiment classifier.
+Use word2vec and GRU to train a Taipei_FAQ classifier.
 
 ## Objective
 
