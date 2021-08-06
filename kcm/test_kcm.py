@@ -18,7 +18,7 @@ class TestKCM(unittest.TestCase):
 
     """
 
-    test_word_list = ['臺灣', '周杰倫', '韓國瑜', '中興大學', '肺炎']
+    test_word_list = ['臺灣', '蔡英文', '復仇者聯盟', '中興大學', '肺炎']
 
     def test_empty(self):
         self.assertEqual(sim(''), [])
@@ -41,23 +41,23 @@ class TestKCM(unittest.TestCase):
             self.assertTrue(len(sim(word)[0]) > 1)
 
     def test_example(self):
-        example_list = ['日本', '中國大陸', '分佈', '香港', '中國', '群島', '中華民國', '美國', '地區', '臺北市']
+        example_list = ['配音', '香港', '大陸', '日本', '聲演', '日治', '中國大陸', '名稱', '傳統', '地域']
         overlap = set([result[0] for result in sim('臺灣')]) & set(example_list)
         self.assertTrue(len(overlap) / 10 > 0.7)
 
-        example_list = ['專輯', '演唱會', '歌曲', '電影', '歌手', '世界', '臺灣', '音樂', '合作', '方文山']
-        overlap = set([result[0] for result in sim('周杰倫')]) & set(example_list)
+        example_list = ['總統', '中華民國總統', '民進黨', '主席', '臺灣', '民主進步黨', '時任', '競選', '馬英九', '總統府']
+        overlap = set([result[0] for result in sim('蔡英文')]) & set(example_list)
         self.assertTrue(len(overlap) / 10 > 0.7)
 
-        example_list = ['高雄市', '國民黨', '候選人', '中國國民黨', '高雄', '市長', '總統', '總統候選人', '高雄市市長', '選舉']
+        example_list = ['無限', '電影', '奧創', '紀元', '終局', '漫威', '英雄', '內戰', '美國隊長', '飾演']
         overlap = set([result[0] for result in sim('韓國瑜')]) & set(example_list)
         self.assertTrue(len(overlap) / 10 > 0.7)
 
-        example_list = ['大學', '清華大學', '臺灣', '成功', '臺灣大學', '臺中', '法商學院', '性騷擾', '政治', '教授']
+        example_list = ['大學', '教授', '臺灣', '畢業', '臺灣省立', '農學院', '法商學院', '研究所', '合併', '師範大學']
         overlap = set([result[0] for result in sim('中興大學')]) & set(example_list)
         self.assertTrue(len(overlap) / 10 > 0.7)
 
-        example_list = ['疫情', '武漢', '新冠', '感染', '冠狀病毒', '因應', '事件', '治療', '逝世', '急性']
+        example_list = ['病例', '新冠', '冠狀病毒', '疫情', '傳染性', '報告', '感染', '武漢', '人數', '患者']
         overlap = set([result[0] for result in sim('肺炎')]) & set(example_list)
         self.assertTrue(len(overlap) / 10 > 0.7)
 
