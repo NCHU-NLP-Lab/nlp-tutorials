@@ -50,7 +50,7 @@ class TestKCM(unittest.TestCase):
         self.assertTrue(len(overlap) / 10 > 0.7)
 
         example_list = ['無限', '電影', '奧創', '紀元', '終局', '漫威', '英雄', '內戰', '美國隊長', '飾演']
-        overlap = set([result[0] for result in sim('韓國瑜')]) & set(example_list)
+        overlap = set([result[0] for result in sim('復仇者聯盟')]) & set(example_list)
         self.assertTrue(len(overlap) / 10 > 0.7)
 
         example_list = ['大學', '教授', '臺灣', '畢業', '臺灣省立', '農學院', '法商學院', '研究所', '合併', '師範大學']
