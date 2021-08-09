@@ -17,7 +17,7 @@ class TestKCM(unittest.TestCase):
     """Test the `word2vec` function defined in `.hw.word2vec`.
     """
 
-    test_word_list = ['臺灣', '周杰倫', '韓國瑜', '中興大學', '肺炎']
+    test_word_list = ['臺灣', '蔡英文', '復仇者聯盟', '中興大學', '肺炎']
 
     def test_empty(self):
         self.assertEqual(sim(''), [])
@@ -44,23 +44,23 @@ class TestKCM(unittest.TestCase):
             self.assertTrue(len(sim(word)[0]) > 1)
 
     def test_example(self):
-        example_list = ['臺灣地區', '臺北', '高雄', '臺南', '臺灣人', '南臺灣', '宜蘭', '臺中', '新竹', '全臺']
+        example_list = ['臺灣地區', '臺北', '南臺灣', '臺灣人', '高雄', '宜蘭', '臺南', '臺中', '新竹', '全臺']
         overlap = set([result[0] for result in sim('臺灣')]) & set(example_list)
         self.assertTrue(len(overlap) / 10 >= 0.5)
 
-        example_list = ['王力宏', '楊丞琳', '蕭敬騰', '林宥嘉', '江蕙', '王心凌', '庾澄慶', '羅志祥', '潘瑋柏', '陶喆']
-        overlap = set([result[0] for result in sim('周杰倫')]) & set(example_list)
+        example_list = ['馬英九', '陳水扁', '李登輝', '蘇貞昌', '韓國瑜', '柯文哲', '吳敦義', '宋楚瑜', '賴清德', '謝長廷']
+        overlap = set([result[0] for result in sim('蔡英文')]) & set(example_list)
         self.assertTrue(len(overlap) / 10 >= 0.5)
 
-        example_list = ['柯文哲', '蘇貞昌', '謝長廷', '陳其邁', '陳菊', '連勝文', '馬英九', '朱立倫', '賴清德', '吳敦義']
-        overlap = set([result[0] for result in sim('韓國瑜')]) & set(example_list)
+        example_list = ['鋼鐵人', 'X戰警', '正義聯盟', '奧創', '美國隊長', '驚奇隊長', '戰警', '蜘蛛人', '水行俠', '奇異博士']
+        overlap = set([result[0] for result in sim('復仇者聯盟')]) & set(example_list)
         self.assertTrue(len(overlap) / 10 >= 0.5)
 
-        example_list = ['國立中興大學', '國立成功大學', '逢甲大學', '國立清華大學', '國立中山大學', '臺灣大學', '東海大學', '國立臺灣師範大學', '國立東華大學', '高雄醫學大學']
+        example_list = ['國立中興大學', '國立成功大學', '逢甲大學', '國立陽明大學', '國立中正大學', '國立屏東科技大學', '東海大學', '國立清華大學', '國立宜蘭大學', '靜宜大學']
         overlap = set([result[0] for result in sim('中興大學')]) & set(example_list)
         self.assertTrue(len(overlap) / 10 >= 0.5)
 
-        example_list = ['疫情', '冠狀病毒', '流感', '非典型肺炎', '新冠', '中東呼吸綜合症', 'COVID', '間質性', 'SARS', '吸入性']
+        example_list = ['COVID', '流感', '疫情', '冠狀病毒', '傳染性', '非典型肺炎', '新冠', '流行性感冒', '吸入性', 'Covid']
         overlap = set([result[0] for result in sim('肺炎')]) & set(example_list)
         self.assertTrue(len(overlap) / 10 >= 0.5)
 
