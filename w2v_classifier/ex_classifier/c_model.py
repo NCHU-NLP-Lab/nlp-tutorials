@@ -17,8 +17,8 @@ class SentClassifier(nn.Module):
             nn.Tanh(),
             nn.Linear(self.hidden_dim, self.n_classes))
 
-    def forward(self, dataset):
-        sentence_vec, target = dataset
+    def forward(self, sentence_vec, target=None):
+        
         predicted = torch.tensor([[0.9, 0.1]], requires_grad=True)
         predicted_value, predicted_class = torch.max(predicted, 1)
 

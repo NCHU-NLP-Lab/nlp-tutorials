@@ -4,9 +4,7 @@ from torch.utils import data
 
 from ex_classifier.a_sent2vec import *
 from ex_classifier.b_dataloader import SentDataloader
-# from ex_classifier.c_model import SentClassifier
-from ex_classifier.new_c_model import SentClassifier
-
+from ex_classifier.c_model import SentClassifier
 from ex_classifier.d_predict import sent_predictor
 
 
